@@ -3,7 +3,7 @@ import './login.css' // css file import
 
 // main functional component 
 // props passing as a parameter  
-const UserForm = ({addLoginInfo}) => {
+const UserForm = ({addLoginInfo, clearLoginInfo}) => {
   // useState hook to store input fields data as object in current state 
   const[loginInfo, setLoginInfo] = useState({
     email: "",
@@ -20,6 +20,13 @@ const UserForm = ({addLoginInfo}) => {
     event.preventDefault();
     // passing current useState's data as an argument to addLoginInfo function 
     addLoginInfo(loginInfo);
+  }
+
+  // function to clear useState data stored as an array 
+  const handleClear = (event) => {
+    event.preventDefault();
+    clearLoginInfo(loginInfo);
+    setLoginInfo({email: "", password: ""});
   }
 
   return (
@@ -49,7 +56,7 @@ const UserForm = ({addLoginInfo}) => {
           <br /><br />
 
           <button onClick={handleSubmit}>Log In</button>
-          <button>Clear</button>
+          <button onClick={handleClear}>Clear</button>
         </form>
       </div>
     </div>

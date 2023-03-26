@@ -13,10 +13,15 @@ function App() {
     setLoginInfos([...loginInfos, loginInfo])
   }
 
+  // function to empty an array 
+  const clearLoginInfo = () => {
+    setLoginInfos([])
+  }
+
   return (
     <div className="App">
       {/* props passing to UserForm component and LoginInfo component  */}
-      <UserForm addLoginInfo={addLoginInfo}/>
+      <UserForm addLoginInfo={addLoginInfo} clearLoginInfo={clearLoginInfo}/>
       <LoginInfo loginInfos={loginInfos} />
     </div>
   );
