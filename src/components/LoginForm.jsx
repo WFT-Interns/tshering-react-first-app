@@ -3,12 +3,24 @@ import './login.css' // css file import
 
 // main functional component 
 // props passing as a parameter  
-const UserForm = () => {
+const UserForm = ({addLoginInfo}) => {
   // useState hook to store input fields data as object in current state 
   const[loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
+
+  // function to handle change in form's input field 
+  const handleChange = (event)=> {
+    setLoginInfo({ ...loginInfo, [event.target.name]: event.target.value})
+  }
+
+  // function to handle events after clicking submit function 
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    // passing current useState's data as an argument to addLoginInfo function 
+    addLoginInfo(loginInfo);
+  }
 
   return (
     <div>
@@ -37,7 +49,7 @@ const UserForm = () => {
           <br /><br />
 
           <button onClick={handleSubmit}>Log In</button>
-          <button onClick={handleClear}>Clear</button>
+          <button>Clear</button>
         </form>
       </div>
     </div>

@@ -1,10 +1,23 @@
+import { useState } from 'react';
 import './App.css';
+import UserForm from './components/LoginForm'; // UserForm component function import
+import LoginInfo from './components/LoginInfo'; // LoginInfo component function import
 
 function App() {
 
+  // useState hook to store login info datas as an array 
+  const [loginInfos, setLoginInfos] = useState([]);
+
+  // function to set current state data in above loginInfos array 
+  const addLoginInfo = (loginInfo) => {
+    setLoginInfos([...loginInfos, loginInfo])
+  }
+
   return (
     <div className="App">
-      <UserForm />
+      {/* props passing to UserForm component and LoginInfo component  */}
+      <UserForm addLoginInfo={addLoginInfo}/>
+      <LoginInfo loginInfos={loginInfos} />
     </div>
   );
 }
