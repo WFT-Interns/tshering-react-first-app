@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate} from "react-router-dom";
 import './login.css' // css file import
 
 // main functional component 
 // props passing as a parameter  
 const UserForm = ({addLoginInfo, clearLoginInfo}) => {
+  const navigate = useNavigate();
   // useState hook to store input fields data as object in current state 
   const[loginInfo, setLoginInfo] = useState({
     email: "",
@@ -17,15 +19,15 @@ const UserForm = ({addLoginInfo, clearLoginInfo}) => {
 
   // function to handle events after clicking submit function 
   const handleSubmit = (event) =>{
-    event.preventDefault();
     // passing current useState's data as an argument to addLoginInfo function 
     addLoginInfo(loginInfo);
+    navigate("/LoginInfo");
   }
 
   // function to clear useState data stored as an array 
   const handleClear = (event) => {
     event.preventDefault();
-    clearLoginInfo(loginInfo);
+    clearLoginInfo();
     setLoginInfo({email: "", password: ""});
   }
 
@@ -55,7 +57,7 @@ const UserForm = ({addLoginInfo, clearLoginInfo}) => {
           />
           <br /><br />
 
-          <button onClick={handleSubmit}>Log In</button>
+          <button onClick={handleSubmit}>Login</button>
           <button onClick={handleClear}>Clear</button>
         </form>
       </div>

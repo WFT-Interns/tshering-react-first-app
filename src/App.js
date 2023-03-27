@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './App.css';
 import UserForm from './components/LoginForm'; // UserForm component function import
 import LoginInfo from './components/LoginInfo'; // LoginInfo component function import
@@ -20,11 +21,18 @@ function App() {
 
   return (
     <div className="App">
-      {/* props passing to UserForm component and LoginInfo component  */}
-      <UserForm addLoginInfo={addLoginInfo} clearLoginInfo={clearLoginInfo}/>
-      <LoginInfo loginInfos={loginInfos} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<UserForm addLoginInfo={addLoginInfo} clearLoginInfo={clearLoginInfo}/>} />
+          <Route path="/LoginInfo" element={<LoginInfo loginInfos={loginInfos} />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
-
+           
 export default App;
+
+            // {/* props passing to UserForm component and LoginInfo component  */}
+            // <UserForm addLoginInfo={addLoginInfo} clearLoginInfo={clearLoginInfo}/>
+            // <LoginInfo loginInfos={loginInfos} />
