@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate} from "react-router-dom";
-import './login.css' // css file import
+import '../login.css' // css file import
 
 // main functional component 
 // props passing as a parameter  
@@ -27,12 +27,12 @@ const UserForm = ({addLoginInfo, clearLoginInfo}) => {
   // function to clear useState data stored as an array 
   const handleClear = (event) => {
     event.preventDefault();
-    clearLoginInfo();
+    clearLoginInfo(loginInfo);
     setLoginInfo({email: "", password: ""});
   }
 
   return (
-    <div>
+    <>
       <div class="form-container">
         <h1>Login</h1>
         {/* react controlling form  */}
@@ -61,7 +61,7 @@ const UserForm = ({addLoginInfo, clearLoginInfo}) => {
           <button onClick={handleClear}>Clear</button>
         </form>
       </div>
-    </div>
+    </>
   )
 }
 
