@@ -1,5 +1,8 @@
 import APIInfo from "../components/APIInfo";
+import { Button } from "@mui/material";
 import React, { useState } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from "../themes/BlackTheme"
 
 export default function LoginInfo({loginInfos}) {
 
@@ -10,7 +13,7 @@ export default function LoginInfo({loginInfos}) {
   }
 
   return (
-      <>
+      <ThemeProvider theme={theme}>
         {loginInfos.map((loginInfo) => (
           <div className="card" key={loginInfo.email}>
             <p>{loginInfo.email}</p>
@@ -18,10 +21,16 @@ export default function LoginInfo({loginInfos}) {
           </div>
         ))}
 
-        <button onClick={handleGenerate}>Generate</button>
-
+        {/* mui generated button  */}
+        <Button 
+          sx={{
+            width: 100
+            }} 
+          variant="contained" 
+          onClick={handleGenerate}>Generate</Button>
+      
         { isGenerated ? <APIInfo /> : ''}
 
-      </>
+      </ThemeProvider>
     );
 }

@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate} from "react-router-dom";
+import { TextField, Button, styled } from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../themes/BlackTheme';
 import '../login.css' // css file import
 
 // main functional component 
 // props passing as a parameter  
 const UserForm = ({addLoginInfo, clearLoginInfo}) => {
+
+  const StyledButton = styled(Button)({
+    '&:hover':{
+      backgroundColor:"",
+      boxShadow: "none"
+    }
+  })
+  
+
   const navigate = useNavigate();
   // useState hook to store input fields data as object in current state 
   const[loginInfo, setLoginInfo] = useState({
@@ -32,36 +44,50 @@ const UserForm = ({addLoginInfo, clearLoginInfo}) => {
   }
 
   return (
-    <>
-      <div class="form-container">
+    <ThemeProvider theme={theme}>
+      <div className="form-container">
         <h1>Login</h1>
         {/* react controlling form  */}
         <form>
-          <label>Enter Email</label><br />
-          <input 
-            type="email" 
+          {/* mui generated input text field  */}
+          <TextField 
+            id="email" label="Email" variant="outlined" 
             name="email"
-            placeholder='email'
+            sx={{width: 280}}
             value={loginInfo.email}
-            onChange={handleChange}
-          />
-          <br /><br />
-          
-          <label>Enter Password</label><br />
-          <input 
-            type="password" 
-            name="password"
-            placeholder='password'
-            value={loginInfo.password}
-            onChange={handleChange}
+            onChange={handleChange} 
           />
           <br /><br />
 
-          <button onClick={handleSubmit}>Login</button>
-          <button onClick={handleClear}>Clear</button>
+          {/* mui generated input text field  */}
+          <TextField 
+            id="password" label="Password" variant="outlined" 
+            name="password"
+            sx={{width: 280}}
+            value={loginInfo.password}
+            onChange={handleChange} 
+          />
+          <br /><br />
+
+
+          <StyledButton 
+            onClick={handleSubmit}
+            sx={{
+              width: 140,
+              boxShadow: 'none'
+            }}
+            variant="contained">Login</StyledButton>
+
+          <StyledButton 
+            onClick={handleClear}
+            sx={{
+              width: 140,
+              boxShadow: 'none'
+            }}
+            variant="contained">Clear</StyledButton>        
         </form>
       </div>
-    </>
+    </ThemeProvider>
   )
 }
 
