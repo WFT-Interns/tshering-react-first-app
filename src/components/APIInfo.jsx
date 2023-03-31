@@ -1,23 +1,41 @@
-import axios from "axios";
 import React from 'react';
-import { useEffect } from "react";
-import { useState } from "react";
+import axiosCreate from "../config/axios.cofig";
+import { useQuery } from 'react-query';
 
-const baseURL = "https://jsonplaceholder.typicode.com/posts/1";
+export default function APIInfo({ value }) {
 
-export default function APIInfo() {
-    const [post, setPost] = useState("");
+    // api request handling
+    const fetchGases = async () => {
+        try {
+            const response = await axiosCreate.get();
+            return response.data;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    };
 
-    useEffect(() => {
-        axios.get(baseURL).then((response) => {
-        setPost(response.data);
-        });
-    }, []);
+    // api data fetching
+    const { data, isLoading, error, status } = useQuery(
+        "gasName",
+        fetchGases
+    );
+
+    console.log("Gas: ", value)
+    console.log(typeof (value));
+    console.log("concentration: ", data && data[value].concentration);
 
     return (
         <>
-            <h1>{post.title}</h1>
-            <p>{post.body}</p>
+            {isLoading && <p>Loading...</p>}
+
+            {error && <p>Error: </p>}
+
+            {status === "success" && (
+                <>
+                    <h1>Hello World!</h1>
+                    <h3>Concentration of {value} is: {data[value].concentration}</h3>
+                </>
+            )}
         </>
     )
 }

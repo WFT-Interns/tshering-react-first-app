@@ -1,36 +1,89 @@
 import APIInfo from "../components/APIInfo";
-import { Button } from "@mui/material";
+import { Button, TextField, Autocomplete } from "@mui/material";
 import React, { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from "../themes/BlackTheme"
+import axiosCreate from "../config/axios.cofig";
+import { useQuery } from "react-query";
 
-export default function LoginInfo({loginInfos}) {
+export default function LoginInfo({ loginInfos }) {
 
-  const[isGenerated, setIsGenerated] = useState(false);
+  // useState to display APIInfo component on generate button click
+  const [isGenerated, setIsGenerated] = useState(false);
 
-  function handleGenerate(){
+  // handling generate button
+  function handleGenerate() {
     setIsGenerated(true);
   }
 
+  // api request handling
+  const fetchGases = async () => {
+    try {
+      const response = await axiosCreate.get();
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  // api data fetching
+  const { data, isLoading, error, status } = useQuery(
+    "gasName",
+    fetchGases
+  );
+
+  // selected value from dropdown menu
+  const [value, setValue] = useState(null)
+
   return (
-      <ThemeProvider theme={theme}>
-        {loginInfos.map((loginInfo) => (
-          <div className="card" key={loginInfo.email}>
-            <p>{loginInfo.email}</p>
-            <p>{loginInfo.password}</p>
-          </div>
-        ))}
 
-        {/* mui generated button  */}
-        <Button 
-          sx={{
-            width: 100
-            }} 
-          variant="contained" 
-          onClick={handleGenerate}>Generate</Button>
-      
-        { isGenerated ? <APIInfo /> : ''}
+    <ThemeProvider theme={theme}>
 
-      </ThemeProvider>
-    );
+      {isLoading && <p>Loading...</p>}
+
+      {error && <p>Error: </p>}
+
+      {status === "success" && (
+        <>
+          {/* mapping login details */}
+          {loginInfos.map((loginInfo) => (
+            <div className="card" key={loginInfo.email}>
+              <p>Welcome, {loginInfo.email}</p>
+            </div>
+          ))}
+
+          {/* Heading */}
+          <h1>Select Gas Type</h1>
+
+          {/* dropdown box */}
+          <Autocomplete
+            // controlled state
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+            id="combo-box-demo"
+            options={data && Object.keys(data)}
+            sx={{
+              width: 300
+            }}
+            renderInput={(params) => <TextField {...params} label="Gas Type" />}
+          />
+
+          {/* mui generated button  */}
+          <Button
+            sx={{
+              marginTop: 3,
+              width: 100
+            }}
+            variant="contained"
+            onClick={handleGenerate}>Generate</Button>
+
+          {isGenerated ? <APIInfo value={value} /> : ''}
+
+        </>
+      )}
+
+    </ThemeProvider>
+  );
 }

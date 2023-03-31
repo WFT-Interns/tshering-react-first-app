@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
-import UserForm from  './pages/LoginForm'; // UserForm component function import
+import UserForm from './pages/LoginForm'; // UserForm component function import
 import LoginInfo from './pages/LoginInfo'; // LoginInfo component function import
 import APIInfo from './components/APIInfo';
 
@@ -24,17 +24,13 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<UserForm addLoginInfo={addLoginInfo} clearLoginInfo={clearLoginInfo}/>} />
+          <Route path="/" element={<UserForm addLoginInfo={addLoginInfo} clearLoginInfo={clearLoginInfo} />} />
           <Route path="/LoginInfo" element={<LoginInfo loginInfos={loginInfos} />} />
-          <Route path="/APIInfo" element={<APIInfo/>} />
+          <Route path="/APIInfo" element={<APIInfo />} />
         </Routes>
       </Router>
     </div>
   );
 }
-           
-export default App;
 
-            // {/* props passing to UserForm component and LoginInfo component  */}
-            // <UserForm addLoginInfo={addLoginInfo} clearLoginInfo={clearLoginInfo}/>
-            // <LoginInfo loginInfos={loginInfos} />
+export default App;
